@@ -1,3 +1,4 @@
+import 'package:doctor_app/Screens/home_screen.dart';
 import 'package:doctor_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -54,7 +55,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 child: Material(
                   borderRadius: BorderRadius.circular(8),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomeScreen(),
+                        ),
+                      );
+                    },
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 40.0, vertical: 15),
