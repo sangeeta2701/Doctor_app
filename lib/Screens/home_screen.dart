@@ -1,4 +1,5 @@
 import 'package:doctor_app/utils/constants.dart';
+import 'package:doctor_app/widgets/doctors_selection.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -139,6 +140,51 @@ class HomeScreen extends StatelessWidget {
                       ],
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15.0),
+                    child: Text("Categories", style: headingStyle),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15),
+                    child: Container(
+                      height: 100,
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: catNames.length,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                Container(
+                                  margin: EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 15),
+                                  height: 60,
+                                  width: 60,
+                                  decoration: BoxDecoration(
+                                      color: appUiBgColor,
+                                      shape: BoxShape.circle,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: appUiLightBlackColor,
+                                          blurRadius: 4,
+                                          spreadRadius: 2,
+                                        ),
+                                      ]),
+                                  child: Center(
+                                    child: catIcons[index],
+                                  ),
+                                ),
+                                Text(catNames[index], style: blackContentStyle),
+                              ],
+                            );
+                          }),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15.0, left: 15),
+                    child: Text("Recommended Doctors", style: headingStyle),
+                  ),
+                  DoctorsSelection(),
                 ],
               ),
             ),
