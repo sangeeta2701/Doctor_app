@@ -1,3 +1,4 @@
+import 'package:doctor_app/Screens/appointment_screen.dart';
 import 'package:doctor_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class DoctorsSelection extends StatelessWidget {
                 width: 200,
                 margin: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
                 decoration: BoxDecoration(
-                    color: appUiBgColor,
+                    color: appUiShadowColor,
                     borderRadius: BorderRadius.circular(15),
                     boxShadow: [
                       BoxShadow(
@@ -34,7 +35,14 @@ class DoctorsSelection extends StatelessWidget {
                     Stack(
                       children: [
                         InkWell(
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AppointmentScreen(),
+                              ),
+                            );
+                          },
                           child: ClipRRect(
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(15),
@@ -49,13 +57,13 @@ class DoctorsSelection extends StatelessWidget {
                           ),
                         ),
                         Align(
-                          alignment: Alignment.topLeft,
+                          alignment: Alignment.topRight,
                           child: Container(
                             margin: EdgeInsets.all(8),
                             height: 45,
                             width: 45,
                             decoration: BoxDecoration(
-                                color: appUiBgColor,
+                                color: appUiShadowColor,
                                 shape: BoxShape.circle,
                                 boxShadow: [
                                   BoxShadow(
@@ -68,12 +76,47 @@ class DoctorsSelection extends StatelessWidget {
                               child: Icon(
                                 Icons.favorite_border,
                                 color: appUiThemeColor,
-                                size: 20,
+                                size: 25,
                               ),
                             ),
                           ),
                         ),
                       ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5.0, horizontal: 8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Dr Looney",
+                            style: themeHeadingStyle,
+                          ),
+                          Text(
+                            "Surgeon",
+                            style: subHeadingStyle,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.star,
+                                  color: Colors.amber,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 5.0),
+                                  child: Text(
+                                    "4.9",
+                                    style: blackContentStyle,
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ],
                 ),

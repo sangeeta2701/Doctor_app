@@ -161,7 +161,7 @@ class HomeScreen extends StatelessWidget {
                                   height: 60,
                                   width: 60,
                                   decoration: BoxDecoration(
-                                      color: appUiBgColor,
+                                      color: appUiShadowColor,
                                       shape: BoxShape.circle,
                                       boxShadow: [
                                         BoxShadow(
