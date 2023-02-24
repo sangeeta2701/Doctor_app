@@ -90,11 +90,7 @@ class HomeScreen extends StatelessWidget {
                           padding: const EdgeInsets.only(top: 15.0),
                           child: Text(
                             "Hi,Dear",
-                            style: TextStyle(
-                              color: appUiLightColor,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: wHeadingStyle,
                           ),
                         ),
                         Padding(

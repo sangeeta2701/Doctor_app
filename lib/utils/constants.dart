@@ -30,3 +30,9 @@ TextStyle themeHeadingStyle = TextStyle(
   fontWeight: FontWeight.w500,
   color: appUiThemeColor.withOpacity(0.7),
 );
+
+TextStyle wHeadingStyle = TextStyle(
+  color: appUiLightColor,
+  fontSize: 18,
+  fontWeight: FontWeight.w500,
+);
