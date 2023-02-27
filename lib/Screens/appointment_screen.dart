@@ -1,5 +1,6 @@
 import 'package:doctor_app/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class AppointmentScreen extends StatefulWidget {
@@ -80,11 +81,13 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
       "isSelected": false,
     },
   ];
+  bool hossSm = false;
+  TextEditingController dateController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: appUiBgColor,
+      // backgroundColor: appUiBgColor,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -93,7 +96,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
               height: MediaQuery.of(context).size.height / 2.1,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("assets/images/doctor2.jpg"),
+                      image: AssetImage("assets/images/doctor4.jpg"),
                       fit: BoxFit.cover),
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(20),
@@ -236,63 +239,86 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                       style: subHeadingStyle,
                     ),
                   ),
-                  Container(
-                    height: 70,
-                    child: ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 6,
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () {},
-                            child: Container(
-                              margin: EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 5),
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 5, horizontal: 25),
-                              decoration: BoxDecoration(
-                                  color: index == 1
-                                      ? appUiThemeColor
-                                      : appUiShadowColor,
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: appUiLightBlackColor,
-                                      blurRadius: 4,
-                                      spreadRadius: 2,
-                                    )
-                                  ]),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    "${index + 8}",
-                                    style: TextStyle(
-                                      fontSize: 17,
-                                      color: index == 1
-                                          ? appUiLightColor
-                                          : appUiDarkColor.withOpacity(0.6),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 8.0),
-                                    child: Text(
-                                      "FEB",
-                                      style: TextStyle(
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w500,
-                                        color: index == 1
-                                            ? appUiLightColor
-                                            : appUiDarkColor.withOpacity(0.6),
-                                      ),
-                                    ),
-                                  )
-                                ],
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: SizedBox(
+                      height: 70,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Select Date :",
+                            style: subHeadingStyle,
+                          ),
+                          SizedBox(
+                            height: 40,
+                            width: 250,
+                            child: TextFormField(
+                              textAlign: TextAlign.center,
+                              style: subHeadingStyle,
+                              readOnly: true,
+                              controller: dateController,
+                              decoration: InputDecoration(
+                                contentPadding: EdgeInsets.all(8),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide(
+                                      color: appUiLightBlackColor, width: 1),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                  borderSide: BorderSide(
+                                      color: appUiThemeColor, width: 1),
+                                ),
+                                hintText: "Choose from calender",
+                                hintStyle: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  color: appUiLightBlackColor.withOpacity(0.5),
+                                ),
                               ),
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Please Enter Delivery Date";
+                                } else {
+                                  return null;
+                                }
+                              },
+                              onTap: () async {
+                                DateTime? pickedDate = await showDatePicker(
+                                    context: context,
+                                    builder: (context, child) {
+                                      return Theme(
+                                        data: Theme.of(context).copyWith(
+                                          colorScheme: ColorScheme.light(
+                                            primary: appUiThemeColor,
+                                            onPrimary: appUiLightColor,
+                                            onSurface: appUiThemeColor,
+                                          ),
+                                        ),
+                                        child: child!,
+                                      );
+                                    },
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(1950),
+                                    lastDate: DateTime(2100));
+
+                                if (pickedDate != null) {
+                                  print(pickedDate);
+                                  String formattedDate =
+                                      DateFormat('yyyy-MM-dd')
+                                          .format(pickedDate);
+                                  print(formattedDate);
+                                  setState(() {
+                                    dateController.text = formattedDate;
+                                  });
+                                } else {}
+                              },
                             ),
-                          );
-                        }),
+                          )
+                        ],
+                      ),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 15.0),
@@ -303,12 +329,44 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 8.0),
-                    child: Wrap(
-                      // spacing: 5,
-                      runSpacing: 10,
-                      children: hospitalTimePref
-                          .map((Map fp) => HospitalTimePreSel(fp))
-                          .toList(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Wrap(
+                          // spacing: 5,
+                          runSpacing: 10,
+                          children: List.generate(
+                              hossSm == false
+                                  ? (hospitalTimePref.length < 4
+                                      ? hospitalTimePref.length
+                                      : 4)
+                                  : hospitalTimePref.length,
+                              (index) => HospitalTimePreSel(
+                                  hospitalTimePref[index])).toList(),
+                        ),
+                        ListTile(
+                          trailing: Icon(
+                            Icons.keyboard_double_arrow_down,
+                            size: 0.1,
+                          ),
+                          title: Align(
+                            alignment: Alignment.center,
+                            child: Text(
+                              hossSm ? "Show less" : "Show More",
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  color: appUiDarkColor),
+                            ),
+                          ),
+                          onTap: () {
+                            setState(() {
+                              hossSm = !hossSm;
+                            });
+                          },
+                        ),
+                        Divider(),
+                      ],
                     ),
                   ),
                 ],
