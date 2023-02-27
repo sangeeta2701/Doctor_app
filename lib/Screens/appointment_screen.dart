@@ -2,8 +2,84 @@ import 'package:doctor_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-class AppointmentScreen extends StatelessWidget {
-  const AppointmentScreen({Key? key}) : super(key: key);
+class AppointmentScreen extends StatefulWidget {
+  AppointmentScreen({Key? key}) : super(key: key);
+
+  @override
+  State<AppointmentScreen> createState() => _AppointmentScreenState();
+}
+
+class _AppointmentScreenState extends State<AppointmentScreen> {
+  List<Map> hospitalTimePref = [
+    {
+      "txt": "10:00am",
+      "isSelected": false,
+    },
+    {
+      "txt": "10:15am",
+      "isSelected": false,
+    },
+    {
+      "txt": "10:30am",
+      "isSelected": false,
+    },
+    {
+      "txt": "10:45am",
+      "isSelected": false,
+    },
+    {
+      "txt": "11:00am",
+      "isSelected": false,
+    },
+    {
+      "txt": "11:15am",
+      "isSelected": false,
+    },
+    {
+      "txt": "11:30am",
+      "isSelected": false,
+    },
+    {
+      "txt": "11:45am",
+      "isSelected": false,
+    },
+    {
+      "txt": "12:00pm",
+      "isSelected": false,
+    },
+    {
+      "txt": "12:15pm",
+      "isSelected": false,
+    },
+    {
+      "txt": "12:30pm",
+      "isSelected": false,
+    },
+    {
+      "txt": "12:45pm",
+      "isSelected": false,
+    },
+    {
+      "txt": "1:00pm",
+      "isSelected": false,
+    },
+    {
+      "txt": "1:15pm",
+      "isSelected": false,
+    },
+    {
+      "txt": "1:30pm",
+      "isSelected": false,
+    },
+    {
+      "txt": "1:45pm",
+      "isSelected": false,
+    },
+    {
+      "txt": "2:00pm",
+      "isSelected": false,
+    },
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +93,7 @@ class AppointmentScreen extends StatelessWidget {
               height: MediaQuery.of(context).size.height / 2.1,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("assets/images/doctor1.jpg"),
+                      image: AssetImage("assets/images/doctor2.jpg"),
                       fit: BoxFit.cover),
                   borderRadius: BorderRadius.only(
                     bottomLeft: Radius.circular(20),
@@ -225,10 +301,54 @@ class AppointmentScreen extends StatelessWidget {
                       style: subHeadingStyle,
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Wrap(
+                      // spacing: 5,
+                      runSpacing: 10,
+                      children: hospitalTimePref
+                          .map((Map fp) => HospitalTimePreSel(fp))
+                          .toList(),
+                    ),
+                  ),
                 ],
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget HospitalTimePreSel(Map e) {
+    bool isSelected = e["isSelected"];
+
+    return Padding(
+      padding: const EdgeInsets.only(right: 5.0),
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            isSelected = !isSelected;
+            e["isSelected"] = isSelected;
+          });
+        },
+        child: Container(
+          height: 40,
+          width: 90,
+          decoration: BoxDecoration(
+            color: isSelected ? appUiThemeColor : appUiLightColor,
+            border: Border.all(color: appUiThemeColor, width: 1),
+            borderRadius: BorderRadius.circular(6),
+          ),
+          child: Center(
+            child: Text(
+              e["txt"] ?? "",
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: isSelected ? appUiLightColor : appUiThemeColor),
+            ),
+          ),
         ),
       ),
     );
